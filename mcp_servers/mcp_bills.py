@@ -8,24 +8,24 @@ from mcp.server.fastmcp import FastMCP
 from db.connection import SessionLocal
 from db.models.projects import Projects
 
-mcp_projects = FastMCP("projects")
+mcp_bills = FastMCP("bills")
 
-@mcp_projects.tool()
-def project_get():
+@mcp_bills.tool()
+def bills_get():
     return "Hello from project_get"
 
-@mcp_projects.tool()
-def project_create():
+@mcp_bills.tool()
+def bills_create():
     return "Hello from project_get"
 
-@mcp_projects.tool()
-def project_update():
+@mcp_bills.tool()
+def bills_update():
     return "Hello from project_get"
 
-@mcp_projects.tool()
-def project_list():
+@mcp_bills.tool()
+def bills_list():
     return "Hello from project_get"
 
-@mcp_projects.tool()
-def Get_list_projects_by_creation_date():
+@mcp_bills.tool()
+def bills_list_by_creation_date():
    return "Hello from project_get"

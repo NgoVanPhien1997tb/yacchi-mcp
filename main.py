@@ -1,52 +1,35 @@
 from fastmcp import FastMCP
+import asyncio
 
-mcp = FastMCP("My MCP Server")
+# Define subservers
+weather_mcp = FastMCP(name="WeatherService")
 
-@mcp.tool
-def greet(name: str) -> str:
-    return f"Hello, {name}!"
+@weather_mcp.tool
+def get_forecast(city: str) -> dict:
+    """Get weather forecast."""
+    return {"city": city, "forecast": "Sunny"}
+
+@weather_mcp.resource("data://cities/supported")
+def list_supported_cities() -> list[str]:
+    """List cities with weather support."""
+    return ["London", "Paris", "Tokyo"]
+
+# Define main server
+main_mcp = FastMCP(name="MainApp")
+
+@main_mcp.tool()
+def list_supported_functions() -> list[str]:
+    """List supported functions."""
+    return ["Projects", "Customers", "Bills", "Payments"]
+
+# Import subserver
+async def setup():
+    await main_mcp.import_server(weather_mcp, prefix="weather")
+
+# Result: main_mcp now contains prefixed components:
+# - Tool: "weather_get_forecast"
+# - Resource: "data://weather/cities/supported" 
 
 if __name__ == "__main__":
-    mcp.run(transport="http", port=8000)
-
-# from db.models.projects import Projects
-# from db.connection import SessionLocal
-# import asyncio
-# from mcp import ClientSession
-# from fastmcp import Client, FastMCP
-
-# import asyncio
-# from fastmcp import Client, FastMCP
-# client = Client("http://127.0.0.1:8000/mcp")
-
-# def hello():
-#     print("A")
-#     asyncio.sleep(2)
-#     print("B")
-
-# hello()
-
-# async def main():
-#     async with client:
-#         # Basic server interaction
-#         await client.ping()
-        
-#         # Execute operations
-#         result = await client.call_tool("get_projects", {"include_deleted": False})
-#         print(result)
-
-# asyncio.run(main())
-# def main():
-#     print("Hello from yacchi-mcp!")
-#     session = SessionLocal()
-#     try:
-#         projects = session.query(Projects).all()
-
-#         for p in projects:
-#             print(f"ID: {p.id}, Name: {p.name}, Deleted: {p.is_deleted}, Tax: {p.tax}")
-
-#     finally:
-#         session.close()
-
-# if __name__ == "__main__":
-#     main()
+    asyncio.run(setup())
+    main_mcp.run(stransport="http", port=9000)
