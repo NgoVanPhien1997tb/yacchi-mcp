@@ -1,0 +1,47 @@
+# # Environment
+# .env
+# *.env
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# __pycache__
+*/__pycache__/
+*.py[cod]
+*$py.class
+
+# Build / packaging
+build/
+dist/
+.eggs/
+*.egg-info/
+wheels/
+
+# Test & coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints
+
+# Logs / temp
+*.log
+*.tmp
+*.bak
+logs/
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Local databases
+db/chroma_db/
+db/*.sqlite
+*.db
+
+# OS files
+.DS_Store
+Thumbs.db
