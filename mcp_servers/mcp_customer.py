@@ -149,9 +149,53 @@ def customers_search(
 def customers_create():
     return "Sorry !!! Function not implemented yet"
 
-@mcp_customers.tool()
-def customers_update():
-    return "Sorry !!! Function not implemented yet"
+@mcp_customers.tool(
+    name="update_customer",
+    description="Update customer details",
+)
+def customers_update(
+        id: Annotated[str, "Customer ID"],
+        name: Annotated[Optional[str], "Customer name"] = None,
+        email: Annotated[Optional[str], "Customer email"] = None,
+        phone_number: Annotated[Optional[str], "Customer phone number"] = None,
+):
+    # build SET clause dynamically
+    set_parts: List[str] = []
+    params: dict = {"id": id}
+    if name is not None:
+        set_parts.append("name = :name")
+        params["name"] = name
+    if email is not None:
+        set_parts.append("email = :email")
+        params["email"] = email
+    if phone_number is not None:
+        set_parts.append("phone_number = :phone_number")
+        params["phone_number"] = phone_number
+
+    if not set_parts:
+        return {"error": "no fields to update"}
+
+    set_sql = ", ".join(set_parts)
+    update_sql = f"""
+        UPDATE customers
+        SET {set_sql}
+        WHERE id = :id AND is_deleted = false
+        RETURNING id, name, email, phone_number, created_at, is_deleted
+    """
+
+    with SessionLocal() as db:
+        result = db.execute(text(update_sql), params)
+        try:
+            updated = result.mappings().first()
+        except Exception:
+            updated = None
+        # commit so change is persisted
+        db.commit()
+
+    if not updated:
+        return {"error": "customer not found or already deleted"}
+
+    return {k: _to_jsonable(v) for k, v in dict(updated).items()}
 
 @mcp_customers.tool()
 def customers_list():

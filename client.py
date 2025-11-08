@@ -6,11 +6,11 @@ client = Client("http://localhost:8000/mcp")
 async def call_tool(name: str):
     async with client:
         # result = await client.call_tool("weather_get_forecast", {"city": name})
-        # print(result)
-        response = await client.call_tool("projects_project_list_by_customer_ids", {"ids": "CS00000276"})
+        print("Call function here")
+        response = await client.call_tool("customers_update_customer", {"id": "CS00000276", "name": "Đạt"})
         print(response)
-        response1 = await client.call_tool("bills_bills_get")
-        print(response1)
+        # response1 = await client.call_tool("bills_bills_get")
+        # print(response1)
 
     #     weather_content = await client.read_resource("data://weather/cities/supported")
     
