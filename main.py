@@ -1,35 +1,18 @@
 from fastmcp import FastMCP
+from mcp_servers.mcp_projects import mcp_projects
+from mcp_servers.mcp_bills import mcp_bills
+from mcp_servers.mcp_payment import mcp_payment
+from mcp_servers.mcp_customer import mcp_customers
 import asyncio
 
-# Define subservers
-weather_mcp = FastMCP(name="WeatherService")
-
-@weather_mcp.tool
-def get_forecast(city: str) -> dict:
-    """Get weather forecast."""
-    return {"city": city, "forecast": "Sunny"}
-
-@weather_mcp.resource("data://cities/supported")
-def list_supported_cities() -> list[str]:
-    """List cities with weather support."""
-    return ["London", "Paris", "Tokyo"]
-
-# Define main server
 main_mcp = FastMCP(name="MainApp")
 
-@main_mcp.tool()
-def list_supported_functions() -> list[str]:
-    """List supported functions."""
-    return ["Projects", "Customers", "Bills", "Payments"]
-
-# Import subserver
 async def setup():
-    await main_mcp.import_server(weather_mcp, prefix="weather")
-
-# Result: main_mcp now contains prefixed components:
-# - Tool: "weather_get_forecast"
-# - Resource: "data://weather/cities/supported" 
+    await main_mcp.import_server(mcp_projects, prefix="projects")
+    await main_mcp.import_server(mcp_bills, prefix="bills")
+    await main_mcp.import_server(mcp_payment, prefix="payment")
+    await main_mcp.import_server(mcp_customers, prefix="customers")
 
 if __name__ == "__main__":
     asyncio.run(setup())
-    main_mcp.run(stransport="http", port=9000)
+    main_mcp.run(transport="http", host="0.0.0.0", port=8000)

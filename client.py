@@ -1,15 +1,33 @@
-# client.py
 import asyncio
-from fastmcp.client import Client
+from fastmcp import Client
 
-async def main():
-    async with Client("http://127.0.0.1:8000") as client:
-        tools = await client.list_tools()
-        print("TOOLS:", [t["name"] for t in tools])  # xem tên thực tế
+client = Client("http://localhost:8000/mcp")
 
-        # gọi đúng tên như in ra ở trên
-        # result = await client.call_tool("weather_get_forecast", {"city": "London"})
-        # print("RESULT:", result)
+async def call_tool(name: str):
+    async with client:
+        # result = await client.call_tool("weather_get_forecast", {"city": name})
+        # print(result)
+        response = await client.call_tool("projects_project_list_by_customer_ids", {"ids": "CS00000276"})
+        print(response)
+        response1 = await client.call_tool("bills_bills_get")
+        print(response1)
 
-if __name__ == "__main__":
-    asyncio.run(main())
+    #     weather_content = await client.read_resource("data://weather/cities/supported")
+    
+    # # Access the generated content
+    #     print(weather_content[0].text)
+
+        resources = await client.list_resources()
+    # resources -> list[mcp.types.Resource]
+    
+    for resource in resources:
+        print(f"Resource URI: {resource.uri}")
+        print(f"Name: {resource.name}")
+        print(f"Description: {resource.description}")
+        print(f"MIME Type: {resource.mimeType}")
+        # Access tags and other metadata
+        if hasattr(resource, '_meta') and resource._meta:
+            fastmcp_meta = resource._meta.get('_fastmcp', {})
+            print(f"Tags: {fastmcp_meta.get('tags', [])}")
+    
+asyncio.run(call_tool("Ford"))
