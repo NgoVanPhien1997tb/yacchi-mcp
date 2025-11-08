@@ -145,9 +145,9 @@ def customers_search(
         "items": items,
     }
 
-@mcp_customers.tool()
-def customers_create():
-    return "Sorry !!! Function not implemented yet"
+# @mcp_customers.tool()
+# def customers_create():
+#     return "Sorry !!! Function not implemented yet"
 
 @mcp_customers.tool(
     name="update_customer",
@@ -197,11 +197,11 @@ def customers_update(
 
     return {k: _to_jsonable(v) for k, v in dict(updated).items()}
 
-@mcp_customers.tool()
-def customers_list():
-    return "Sorry !!! Function not implemented yet"
-
-@mcp_customers.tool()
-def customers_list_by_creation_date():
-   return "Sorry !!! Function not implemented yet"
+# @mcp_customers.tool()
+# def customers_list():
+#     return "Sorry !!! Function not implemented yet"
+#
+# @mcp_customers.tool()
+# def customers_list_by_creation_date():
+#    return "Sorry !!! Function not implemented yet"
 

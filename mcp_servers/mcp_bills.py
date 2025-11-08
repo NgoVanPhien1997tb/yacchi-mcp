@@ -352,14 +352,14 @@ def bills_create_prompt():
     """
 
 
-@mcp_bills.tool()
-def bills_update():
-    return "Sorry !!! Function not implemented yet"
-
-@mcp_bills.tool()
-def bills_list():
-    return "Sorry !!! Function not implemented yet"
-
-@mcp_bills.tool()
-def bills_list_by_creation_date():
-   return "Sorry !!! Function not implemented yet"
+# @mcp_bills.tool()
+# def bills_update():
+#     return "Sorry !!! Function not implemented yet"
+#
+# @mcp_bills.tool()
+# def bills_list():
+#     return "Sorry !!! Function not implemented yet"
+#
+# @mcp_bills.tool()
+# def bills_list_by_creation_date():
+#    return "Sorry !!! Function not implemented yet"

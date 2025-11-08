@@ -307,18 +307,18 @@ def project_list_by_customer_ids(
         "items": items,
     }
 
-@mcp_projects.tool()
-def project_create():
-    return "Sorry !!! Function not implemented yet"
-
-@mcp_projects.tool()
-def project_update():
-    return "Sorry !!! Function not implemented yet"
-
-@mcp_projects.tool()
-def project_list():
-    return "Sorry !!! Function not implemented yet"
-
-@mcp_projects.tool()
-def get_list_projects_by_creation_date():
-    return "Sorry !!! Function not implemented yet"
+# @mcp_projects.tool()
+# def project_create():
+#     return "Sorry !!! Function not implemented yet"
+#
+# @mcp_projects.tool()
+# def project_update():
+#     return "Sorry !!! Function not implemented yet"
+#
+# @mcp_projects.tool()
+# def project_list():
+#     return "Sorry !!! Function not implemented yet"
+#
+# @mcp_projects.tool()
+# def get_list_projects_by_creation_date():
+#     return "Sorry !!! Function not implemented yet"
