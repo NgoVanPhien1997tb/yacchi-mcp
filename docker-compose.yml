@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  yacchi-mcp:
+    container_name: yacchi-mcp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: yacchi-mcp:latest
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    command: ["uv", "run", "python", "main.py"]
+    restart: unless-stopped
